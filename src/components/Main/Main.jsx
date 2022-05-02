@@ -1,6 +1,6 @@
 import pen from '../../images/pen.svg'
 import cross from '../../images/cross.svg'
-import api from '../../utils/Api'
+import Api from '../../utils/Api'
 import Card from '../Card/Card'
 import {
    useEffect,
@@ -21,7 +21,7 @@ const Main = ({
 
 
    useEffect(() => {
-      api.getProfile()
+      Api.getProfile()
          .then((res) => {
             setUserName(res.name);
             setUserDescription(res.about);
@@ -31,7 +31,7 @@ const Main = ({
    }, []);
 
    useEffect(() => {
-      api.getInitialCards()
+      Api.getInitialCards()
          .then((res) => {
             setCard(res)
          })
