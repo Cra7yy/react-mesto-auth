@@ -6,7 +6,7 @@ import {
 import pen from '../../images/pen.svg'
 import cross from '../../images/cross.svg'
 import api from '../../utils/api'
-import Card from '../Card/Card'
+import Card from '../Card'
 
 const Main = ({
   onEditProfile,
