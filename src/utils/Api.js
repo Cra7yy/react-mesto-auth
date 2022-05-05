@@ -14,17 +14,13 @@ class Api {
   getProfile() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
-    }).then((res) => {
-      return this._getResponseData(res)
-    })
+    }).then(res => this._getResponseData(res))
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
-    }).then((res) => {
-      return this._getResponseData(res)
-    })
+    }).then(res => this._getResponseData(res))
   }
 
   editProfile(data) {
@@ -35,9 +31,7 @@ class Api {
         name: data.name,
         about: data.sign
       })
-    }).then((res) => {
-      return this._getResponseData(res)
-    })
+    }).then(res => this._getResponseData(res))
   }
 
   addCard(data) {
@@ -48,52 +42,42 @@ class Api {
         name: data.name,
         link: data.link
       })
-    }).then((res) => {
-      return this._getResponseData(res)
-    })
+    }).then(res => this._getResponseData(res))
   }
 
   deleteCard(id) {
     return fetch(`${this._baseUrl}/cards/${id} `, {
-      method: "DELETE",
-      headers: this._headers,
-    })
-      .then((res) => {
-        return this._getResponseData(res)
+        method: "DELETE",
+        headers: this._headers,
       })
+      .then(res => this._getResponseData(res))
   }
 
   deleteLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes  `, {
-      method: "DELETE",
-      headers: this._headers,
-    })
-      .then((res) => {
-        return this._getResponseData(res)
+        method: "DELETE",
+        headers: this._headers,
       })
+      .then(res => this._getResponseData(res))
   }
 
   addLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes  `, {
-      method: "PUT",
-      headers: this._headers,
-    })
-      .then((res) => {
-        return this._getResponseData(res)
+        method: "PUT",
+        headers: this._headers,
       })
+      .then(res => this._getResponseData(res))
   }
 
   updateAvatar(avatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar: avatar
+        method: "PATCH",
+        headers: this._headers,
+        body: JSON.stringify({
+          avatar: avatar
+        })
       })
-    })
-      .then((res) => {
-        return this._getResponseData(res)
-      })
+      .then(res => this._getResponseData(res))
   }
 }
 
