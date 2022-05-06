@@ -5,7 +5,7 @@ import {
 
 import pen from '../images/pen.svg'
 import cross from '../images/cross.svg'
-import api from '../utils/api'
+import api from '../utils/Api'
 import Card from './Card'
 
 const Main = ({
