@@ -20,11 +20,3 @@ export {
   popupInputValueSign,
   profileImgShadow
 }
-
-
-
-
-
-
-
-
