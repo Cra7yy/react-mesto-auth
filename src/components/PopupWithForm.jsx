@@ -5,8 +5,8 @@ const PopupWithForm = ({ title, name, buttonText, children, isOpen, onClose }) =
       <div className="popup__container">
         <button type="button" className="popup__cross" onClick={onClose}></button>
         <h2 className="popup__title">{title}</h2>
-        <form name={name} action="#" method="post" enctype="multipart/form-data"
-          className="popup__form popup__form_type_profile" novalidate>
+        <form name={name} action="#" method="post" encType="multipart/form-data"
+          className="popup__form popup__form_type_profile" noValidate>
           {children}
           <button type="submit" className="popup__submit">{buttonText}</button>
         </form>
