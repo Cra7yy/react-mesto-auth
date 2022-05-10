@@ -23,24 +23,24 @@ class Api {
     }).then(res => this._getResponseData(res))
   }
 
-  editProfile(data) {
+  editProfile({name,about}) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: data.name,
-        about: data.sign
+        name: name,
+        about: about
       })
     }).then(res => this._getResponseData(res))
   }
 
-  addCard(data) {
+  addCard({name, link}) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
-        name: data.name,
-        link: data.link
+        name: name,
+        link: link
       })
     }).then(res => this._getResponseData(res))
   }
@@ -69,7 +69,8 @@ class Api {
       .then(res => this._getResponseData(res))
   }
 
-  updateAvatar(avatar) {
+  updateAvatar({avatar}) {
+    console.log(avatar)
     return fetch(`${this._baseUrl}/users/me/avatar`, {
         method: "PATCH",
         headers: this._headers,
@@ -79,6 +80,15 @@ class Api {
       })
       .then(res => this._getResponseData(res))
   }
+
+  changeLikeCardStatus(cardId, isLiked) {
+    if (isLiked) {
+      return this.addLike(cardId)
+    } else {
+      return this.deleteLike(cardId)
+    }
+  }
+
 }
 
 const api = new Api({

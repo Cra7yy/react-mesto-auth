@@ -1,61 +1,38 @@
-import {
-  useEffect,
-  useState
-} from 'react'
+import { useContext } from 'react'
 
 import pen from '../images/pen.svg'
 import cross from '../images/cross.svg'
-import api from '../utils/api'
 import Card from './Card'
+import CurrentUserContext from '../contexts/CurrentUserContext'
 
 const Main = ({
   onEditProfile,
   onAddPlace,
   onEditAvatar,
-  onCardClick
+  onCardClick,
+  cards,
+  onCardLike,
+  onCardDelete
 }) => {
 
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
-  const [cards, setCards] = useState([])
-
-
-  useEffect(() => {
-    api.getProfile()
-      .then((res) => {
-        setUserName(res.name);
-        setUserDescription(res.about);
-        setUserAvatar(res.avatar);
-      })
-      .catch(err => console.log(err))
-  }, []);
-
-  useEffect(() => {
-    api.getInitialCards()
-      .then((res) => {
-        setCards(res)
-      })
-      .catch(err => console.log(err))
-  }, [])
-
+  const context = useContext(CurrentUserContext)
 
   return (
     <main className="main" >
       <section className="profile" >
         <div className="profile__content" >
           <div className="profile__img-container" onClick={onEditAvatar} >
-            <img src={userAvatar} alt="фото профиля" className="profile__img" />
+            <img src={context.avatar} alt="фото профиля" className="profile__img" />
             <span className="profile__img-shadow" ></span>
           </div>
           <div className="profile__text-content" >
             <div className="profile__element" >
-              <h1 className="profile__title" > {userName} </h1>
+              <h1 className="profile__title" > {context.name} </h1>
               <button type="button" className="profile__editor" onClick={onEditProfile} >
                 <img src={pen} alt="ручка" className="profile__pen" />
               </button>
             </div>
-            <p className="profile__subtitle">{userDescription}</p>
+            <p className="profile__subtitle">{context.about}</p>
           </div>
         </div>
         <button type="button"
@@ -65,7 +42,13 @@ const Main = ({
         </button>
       </section>
       <section className="grid-conteiner" >
-        {cards.map((item) => <Card key={item._id} card={item} onCardClick={onCardClick} />)}
+        {cards.map((item) => <Card
+          key={item._id}
+          card={item}
+          onCardClick={onCardClick}
+          onCardLike={onCardLike}
+          onCardDelete={onCardDelete}
+        />)}
       </section>
     </main>
   )

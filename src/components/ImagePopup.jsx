@@ -1,6 +1,6 @@
 const ImagePopup = ({ card, onClose }) => {
 
-  const dataCard = ({  ...card }) 
+  const dataCard = ({ ...card })
 
   return (
     <div className={`popup popup_type_image ${card ? "popup_opened" : ''}`}>
