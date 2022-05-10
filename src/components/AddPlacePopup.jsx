@@ -30,7 +30,7 @@ const AddPlacePopup = ({
   useEffect(() => {
     setName('')
     setLink('')
-  }, [context])
+  }, [isOpen])
 
   return (
     <PopupWithForm

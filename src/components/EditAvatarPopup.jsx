@@ -10,7 +10,7 @@ const EditAvatarPopup = ({
 }) => {
 
   const context = useContext(CurrentUserContext)
-  const avatarLink = useRef(false)
+  const avatarLink = useRef()
 
   const handleSubmit = (event) => {
     event.preventDefault()

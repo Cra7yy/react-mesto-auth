@@ -9,14 +9,14 @@ const EditProfilePopup = ({
   onUpdateUser
 }) => {
 
-  const [name, setName] = useState()
-  const [description, setDescription] = useState()
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
   const context = useContext(CurrentUserContext)
 
   useEffect(() => {
     setName(context.name)
     setDescription(context.about)
-  }, [context])
+  }, [context, isOpen])
 
   const handleNameChange = (event) => {
     setName(event.target.value)
