@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 
 import PopupWithForm from './PopupWithForm'
-import CurrentUserContext from '../contexts/CurrentUserContext'
 
 const AddPlacePopup = ({
   isOpen,
@@ -11,7 +10,6 @@ const AddPlacePopup = ({
 
   const [name, setName] = useState('')
   const [link, setLink] = useState('')
-  const context = useContext(CurrentUserContext)
 
   const handleNameChange = (event) => {
     setName(event.target.value)
