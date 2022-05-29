@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import {useState, useEffect} from 'react'
+import {Switch, Route, withRouter, Router} from 'react-router-dom'
 
 import Header from "./Header";
 import Main from './Main'
@@ -7,16 +8,23 @@ import ImagePopup from "./ImagePopup";
 import EditProfilePopup from './EditProfilePopup'
 import EditAvatarPopup from './EditAvatarPopup'
 import AddPlacePopup from './AddPlacePopup'
+import Login from './Login';
+import Register from './Register'
 import api from '../utils/Api'
 import CurrentUserContext from '../contexts/CurrentUserContext'
 
 function App() {
 
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
-  const [selectedCard, setSelectedCard] = useState(null);
-  const [cards, setCards] = useState([])
+  const [isEditProfilePopupOpen,
+    setIsEditProfilePopupOpen] = useState(false)
+  const [isAddPlacePopupOpen,
+    setIsAddPlacePopupOpen] = useState(false)
+  const [isEditAvatarPopupOpen,
+    setIsEditAvatarPopupOpen] = useState(false)
+  const [selectedCard,
+    setSelectedCard] = useState(null);
+  const [cards,
+    setCards] = useState([])
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true)
@@ -41,14 +49,12 @@ function App() {
     setSelectedCard(null)
   }
 
-  const [currentUser, setCurrentUser] = useState({
-    name: '',
-    about: '',
-    link: ''
-  })
+  const [currentUser,
+    setCurrentUser] = useState({name: '', about: '', link: ''})
 
   useEffect(() => {
-    api.getProfile()
+    api
+      .getProfile()
       .then((res) => {
         setCurrentUser(res)
       })
@@ -56,7 +62,8 @@ function App() {
   }, []);
 
   const handleUpdateUser = (data) => {
-    api.editProfile(data)
+    api
+      .editProfile(data)
       .then((res) => {
         setCurrentUser(res)
         closeAllPopups()
@@ -65,7 +72,8 @@ function App() {
   }
 
   const handleUpdateAvatar = (data) => {
-    api.updateAvatar(data)
+    api
+      .updateAvatar(data)
       .then((res) => {
         setCurrentUser(res)
         closeAllPopups()
@@ -74,7 +82,8 @@ function App() {
   }
 
   useEffect(() => {
-    api.getInitialCards()
+    api
+      .getInitialCards()
       .then((res) => {
         setCards(res)
       })
@@ -82,32 +91,37 @@ function App() {
   }, [])
 
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some(i => i._id === currentUser._id)
+    const isLiked = card
+      .likes
+      .some(i => i._id === currentUser._id)
 
-    api.changeLikeCardStatus(card._id, !isLiked)
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
-        setCards((state) =>
-          state.map((c) =>
-            c._id === card._id ? newCard : c));
+        setCards((state) => state.map((c) => c._id === card._id
+          ? newCard
+          : c));
       })
       .catch(err => console.log(err))
   }
 
   const handleCardDelete = (card) => {
-    api.deleteCard(card._id)
+    api
+      .deleteCard(card._id)
       .then(res => {
         console.log(res)
-        setCards((state) =>
-          state.filter((item) =>
-            item._id !== card._id && item));
+        setCards((state) => state.filter((item) => item._id !== card._id && item));
       })
       .catch(err => console.log(err))
   }
 
   const handleAddPlaceSubmit = (card) => {
-    api.addCard(card)
+    api
+      .addCard(card)
       .then((newCard) => {
-        setCards([newCard, ...cards])
+        setCards([
+          newCard, ...cards
+        ])
         closeAllPopups()
       })
       .catch(err => console.log(err))
@@ -115,41 +129,52 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
+      <Router>
+        <Header/>
+        <Switch>
+          <Route path='/signin'>
+            <Login/>
+          </Route>
 
-      <Header />
+          <Route exact path='/signup'>
+            <Register/>
+          </Route>
 
-      <Main
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
-        onCardClick={handleCardClick}
-        cards={cards}
-        onCardLike={handleCardLike}
-        onCardDelete={handleCardDelete} />
+          <Route path='/main'>
+            <Main
+              onEditProfile={handleEditProfileClick}
+              onAddPlace={handleAddPlaceClick}
+              onEditAvatar={handleEditAvatarClick}
+              onCardClick={handleCardClick}
+              cards={cards}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}/>
 
-      <Footer />
+            <EditProfilePopup
+              isOpen={isEditProfilePopupOpen}
+              onClose={closeAllPopups}
+              onUpdateUser={handleUpdateUser}/>
 
-      <EditProfilePopup
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-        onUpdateUser={handleUpdateUser} />
+            <AddPlacePopup
+              onClose={closeAllPopups}
+              isOpen={isAddPlacePopupOpen}
+              onAddPlace={handleAddPlaceSubmit}/>
 
-      <AddPlacePopup
-        onClose={closeAllPopups}
-        isOpen={isAddPlacePopupOpen}
-        onAddPlace={handleAddPlaceSubmit} />
+            <EditAvatarPopup
+              isOpen={isEditAvatarPopupOpen}
+              onClose={closeAllPopups}
+              onUpdateAvatar={handleUpdateAvatar}/>
 
-      <EditAvatarPopup
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-        onUpdateAvatar={handleUpdateAvatar} />
+            <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
 
-      <ImagePopup
-        card={selectedCard}
-        onClose={closeAllPopups} />
+            <Footer/>
 
+          </Route>
+
+        </Switch>
+      </Router>
     </CurrentUserContext.Provider>
   );
 }
 
-export default App;
+export default withRouter(App);
