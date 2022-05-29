@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {Switch, Route, withRouter, Router} from 'react-router-dom'
+import {Switch, Route} from 'react-router-dom'
 
 import Header from "./Header";
 import Main from './Main'
@@ -128,10 +128,10 @@ function App() {
   }
 
   return (
+    
     <CurrentUserContext.Provider value={currentUser}>
-      <Router>
         <Header/>
-        <Switch>
+        <Switch exact path='/signup'>
           <Route path='/signin'>
             <Login/>
           </Route>
@@ -171,10 +171,10 @@ function App() {
 
           </Route>
 
-        </Switch>
-      </Router>
+          </Switch>   
     </CurrentUserContext.Provider>
+
   );
 }
 
-export default withRouter(App);
+export default App;
