@@ -163,6 +163,7 @@ body {
 }
 
 .header__link {
+   margin: 0;
    font-weight: 400;
    font-size: 18px;
    line-height: 22px;
@@ -173,4 +174,9 @@ body {
 .link:hover {
    opacity: 0.5;
    transition-duration: 0.3s;
+}
+
+.header__block{
+   display: flex;
+   gap: 25px;
 }
