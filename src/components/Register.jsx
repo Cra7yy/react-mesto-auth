@@ -1,9 +1,7 @@
 import { useState} from 'react'
 import { Link } from 'react-router-dom'
 
-import InfoTooltip from './InfoTooltip'
-
-const Register = ({ isOpen, onClose, onInfoTooltip, handleRegister }) => {
+const Register = ({ onInfoTooltip, handleRegister }) => {
 
   const [formParams, setFormParams] = useState({
     email: '',
@@ -21,8 +19,8 @@ const Register = ({ isOpen, onClose, onInfoTooltip, handleRegister }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    let {email, password} = formParams
-    handleRegister({ email, password}).catch(err=> console.log('err', err)) 
+    let { email, password } = formParams
+    handleRegister({ email, password })
     onInfoTooltip()
   }
 
@@ -52,10 +50,6 @@ const Register = ({ isOpen, onClose, onInfoTooltip, handleRegister }) => {
           />
         <button type="submit" className="log-in__button">Зарегистрироваться</button>
       </form>
-      <InfoTooltip
-        isOpen={isOpen}
-        onClose={onClose}
-      />
       <p className="log-in__text">Уже зарегистрированы?<Link to="/signin" className="log-in__text link"> Войти</Link></p>
     </div>
   )

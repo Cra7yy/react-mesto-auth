@@ -1,10 +1,10 @@
 import good from '../images/true.svg'
 import notGood from '../images/default.svg'
 
-const InfoTooltip = ({isOpen, onClose}) => {
+const InfoTooltip = ({ isOpen, onClose, register }) => {
 
-  const text = isOpen ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.'
-  const img = isOpen ? good : notGood
+  const text = register ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.'
+  const img = register ? good : notGood
 
   return (
     <div className={`popup ${isOpen && 'popup_opened'}`}>

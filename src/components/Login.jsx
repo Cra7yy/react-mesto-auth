@@ -22,7 +22,6 @@ const Login = ({ handleLogin }) => {
       return;
     }
     handleLogin({ email: formParams.email, password: formParams.password })
-        .catch(err => console.log(err));
   }
 
   return (

@@ -42,13 +42,13 @@ const Main = ({
         </button>
       </section>
       <section className="grid-conteiner" >
-        {cards.map((item) => <Card
+        {cards.map((item) => (<Card
           key={item._id}
           card={item}
           onCardClick={onCardClick}
           onCardLike={onCardLike}
           onCardDelete={onCardDelete}
-        />)}
+        />))}
       </section>
     </main>
   )
